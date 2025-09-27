@@ -1,33 +1,14 @@
-import { writeFileSync, appendFileSync, existsSync, write } from "fs"; // to interact with your computer's file system (create, read, write, update, delete, etc)
+// This version of the app uses only core modules (fs, readline, util)
+
 import { createInterface } from "readline"; // to read data from a readable stream one line at a time
 import { promisify } from 'util'; // to convert callback-based 
+
+import { Person } from "./Person.js";
 
 const readline = createInterface({
     input: process.stdin,
     output: process.stdout
 });
-
-class Person {
-    constructor(name = "", number = "", email = "") {
-        this.name = name;
-        this.number = number;
-        this.email = email;
-    }
-
-    saveToCSV() {
-        if (!existsSync("./contacts.csv")) {
-            writeFileSync("./contacts.csv", "");
-        }
-
-        const content = `${this.name},${this.number},${this.email}\n`;
-        try {
-            appendFileSync("./contacts.csv", content);
-            console.log(`${this.name}: Contact saved!`)
-        } catch (e) {
-            console.error(e);
-        }
-    }
-}
 
 async function getAnswerWithPromisify(message) {
     try {
